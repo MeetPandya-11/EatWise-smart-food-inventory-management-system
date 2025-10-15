@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EatWise - Smart Food Inventory Management</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="container" id="login-page">
+        <div class="login-wrapper">
+            <div class="login-left">
+                <div class="login-illustration">
+                    <img src="assets/organized-healthy-food.jpg" alt="Healthy Food Illustration" class="login-img">
+                    <div class="login-overlay">
+                        <h2>Eat Smart, Live Better</h2>
+                        <p>Track your food inventory, reduce waste, and maintain a healthier lifestyle.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-container">
+                    <div class="logo-container">
+                        <div class="logo">
+                            <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="brand-logo">
+                        </div>
+                        <p class="tagline">Your Intelligent Food Companion</p>
+                    </div>
+                    <div class="login-form">
+                        <h2>Welcome Back</h2>
+                        <p class="login-subtitle">Sign in to access your food inventory</p>
+                        
+                        <!-- Login Method Toggle -->
+                        <div class="login-toggle">
+                            <button id="username-login-tab" class="toggle-btn active">Username</button>
+                            <button id="phone-login-tab" class="toggle-btn">Phone Number</button>
+                        </div>
+                        
+                        <!-- Username Login Form -->
+                        <div id="username-login-form" class="login-method-form">
+                            <div class="input-group">
+                                <label for="username">Username</label>
+                                <div class="input-field">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="username" placeholder="Enter your username">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="password">Password</label>
+                                <div class="input-field">
+                                    <i class="fas fa-lock"></i>
+                                    <input type="password" id="password" placeholder="Enter your password">
+                                </div>
+                                <div class="forgot-password">
+                                    <a href="#">Forgot password?</a>
+                                </div>
+                            </div>
+                            <button id="login-btn" class="btn primary-btn">
+                                <span>Sign In</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Phone Login Form -->
+                        <div id="phone-login-form" class="login-method-form hidden">
+                            <div class="input-group">
+                                <label for="phone-number">Phone Number</label>
+                                <div class="input-field">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" id="phone-number" placeholder="Enter your phone number" maxlength="25">
+                                </div>
+                                <div class="phone-format-hint">
+                                    Format: +91 98765 43210 (India) or (123) 456-7890 (US)
+                                </div>
+                            </div>
+                            <button id="send-otp-btn" class="btn primary-btn">
+                                <span>Send OTP</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            
+                            <!-- OTP Verification Section -->
+                            <div id="otp-verification" class="hidden">
+                                <div class="input-group">
+                                    <label for="otp-code">Enter Verification Code</label>
+                                    <div class="input-field">
+                                        <i class="fas fa-key"></i>
+                                        <input type="text" id="otp-code" placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric">
+                                    </div>
+                                    <div class="otp-instructions">
+                                        A 6-digit verification code has been sent to your phone number.
+                                    </div>
+                                </div>
+                                
+                                <!-- OTP Timer Display -->
+                                <div id="otp-timer" class="otp-timer hidden">
+                                    <span>Resend code in <span id="timer-count">60</span> seconds</span>
+                                </div>
+                                
+                                <button id="verify-otp-btn" class="btn primary-btn">
+                                    <span>Verify Code</span>
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button id="resend-otp-btn" class="btn text-btn">
+                                    <span>Resend Code</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Landing Page -->
+    <div class="container hidden" id="landing-page">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="header-logo">
+                    <h1>EatWise</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#" id="nav-dashboard">Dashboard</a></li>
+                        <li><a href="#" id="nav-inventory">Inventory</a></li>
+                        <li><a href="#" id="nav-recipes">Recipes</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <span>JD</span>
+                    </div>
+                    <div class="user-details">
+                        <span id="landing-user-greeting">John Doe</span>
+                        <button id="landing-logout-btn" class="btn text-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="landing-main">
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="animate__animated animate__fadeInUp">Smart Eating for a <span class="highlight">Healthier You</span></h1>
+                    <p class="tagline-large animate__animated animate__fadeInUp animate__delay-1s">Manage your food, plan healthy meals, and reduce waste with EatWise's intelligent tracking system</p>
+                    <div class="landing-buttons animate__animated animate__fadeInUp animate__delay-2s">
+                        <button id="go-to-dashboard-btn" class="btn primary-btn btn-lg">
+                            <i class="fas fa-home"></i> Go to Dashboard
+                        </button>
+                        <button id="cashier-btn" class="btn accent-btn btn-lg">
+                            <i class="fas fa-cash-register"></i> Cashier
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/fresh-meal-plan.jpg" alt="Healthy Food" class="hero-img animate__animated animate__fadeIn animate__delay-1s">
+                    <div class="hero-shape"></div>
+                </div>
+            </section>
+
+            <section class="inventory-summary">
+                <div class="summary-header">
+                    <h2>Your Food Inventory</h2>
+                    <p>Quick overview of your current food items</p>
+                </div>
+                <div class="summary-cards">
+                    <div class="summary-card animate__animated animate__fadeInUp">
+                        <div class="summary-icon expiring">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="summary-info">
+                            <h3 id="expiring-count">3</h3>
+                            <p>Items Expiring Soon</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 30%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-card animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="summary-icon healthy">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="summary-info">
+                            <h3 id="healthy-count">7</h3>
+                            <p>Healthy Items</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-card animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="summary-icon total">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                        <div class="summary-info">
+                            <h3 id="total-count">10</h3>
+                            <p>Total Items</p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features-section">
+                <div class="features-grid">
+                    <div class="feature-card animate__animated animate__fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Healthy Eating Tips</h3>
+                            <div class="tip-of-day">
+                                <span class="tip-label">Tip of the Day</span>
+                                <p>Include a rainbow of colors on your plate for a variety of nutrients. Different colored fruits and vegetables provide different vitamins and minerals!</p>
+                            </div>
+                            <ul class="benefits-list">
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Eat at least 5 portions of fruits and vegetables daily</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Choose whole grains for more fiber and nutrients</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Limit processed foods and added sugars</span>
+                                </li>
+                            </ul>
+                            <button class="btn text-btn">
+                                <span>View all tips</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feature-card animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="feature-icon">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Meal Planning</h3>
+                            <p>Based on your inventory, here are some healthy meal ideas:</p>
+                            <div class="meal-ideas">
+                                <div class="meal-card">
+                                    <div class="meal-image">
+                                        <img src="assets/veggie-stir-fry.jpg" alt="Veggie Stir-Fry">
+                                    </div>
+                                    <div class="meal-details">
+                                        <h4>Veggie Stir-Fry</h4>
+                                        <div class="meal-meta">
+                                            <span><i class="fas fa-clock"></i> 20 min</span>
+                                            <span><i class="fas fa-fire"></i> 320 cal</span>
+                                        </div>
+                                        <p>Uses: Tomatoes, Bell Peppers</p>
+                                    </div>
+                                </div>
+                                <div class="meal-card">
+                                    <div class="meal-image">
+                                        <img src="assets/fruit-yogurt-bowl.jpg" alt="Fruit Yogurt Bowl">
+                                    </div>
+                                    <div class="meal-details">
+                                        <h4>Fruit Yogurt Bowl</h4>
+                                        <div class="meal-meta">
+                                            <span><i class="fas fa-clock"></i> 5 min</span>
+                                            <span><i class="fas fa-fire"></i> 210 cal</span>
+                                        </div>
+                                        <p>Uses: Yogurt, Apples</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn text-btn">
+                                <span>View all recipes</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h2>Ready to shop for fresh ingredients?</h2>
+                    <p>Use our cashier feature to record new items and keep your inventory up to date.</p>
+                    <button id="cashier-btn-cta" class="btn accent-btn btn-lg">
+                        <i class="fas fa-cash-register"></i> Open Cashier
+                    </button>
+                </div>
+                <div class="cta-image">
+                    <img src="assets/farmers-market.jpg" alt="Fresh Groceries">
+                </div>
+            </section>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="footer-logo-img">
+                    <p>Your Intelligent Food Companion</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Features</h4>
+                        <ul>
+                            <li><a href="#">Inventory Tracking</a></li>
+                            <li><a href="#">Meal Planning</a></li>
+                            <li><a href="#">QR Scanning</a></li>
+                            <li><a href="#">Food Information</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EatWise. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div class="container hidden" id="dashboard-page">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="header-logo">
+                    <h1>EatWise</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" id="nav-home">Home</a></li>
+                        <li><a href="#" class="active">Dashboard</a></li>
+                        <li><a href="#" id="nav-inventory-dash">Inventory</a></li>
+                        <li><a href="#" id="nav-recipes-dash">Recipes</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <span>JD</span>
+                    </div>
+                    <div class="user-details">
+                        <span id="user-greeting">John Doe</span>
+                        <button id="logout-btn" class="btn text-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="dashboard-main">
+            <section class="dashboard-header">
+                <h1>Dashboard</h1>
+                <p>Manage your food inventory and explore healthy options</p>
+            </section>
+            <div class="dashboard-cards">
+                <div class="dashboard-card" id="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h2>Food Information</h2>
+                        <p>Learn about fresh food, expiry tracking, and more.</p>
+                        <button class="btn secondary-btn">View Info</button>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="qr-card">
+                    <div class="card-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="card-content">
+                        <h2>QR Scanner</h2>
+                        <p>Scan or upload QR codes to manage your inventory.</p>
+                        <button class="btn secondary-btn">Open Scanner</button>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="cashier-card">
+                    <div class="card-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <div class="card-content">
+                        <h2>Cashier</h2>
+                        <p>Add new purchases and update your food inventory.</p>
+                        <button class="btn accent-btn">Open Cashier</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="footer-logo-img">
+                    <p>Your Intelligent Food Companion</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Features</h4>
+                        <ul>
+                            <li><a href="#">Inventory Tracking</a></li>
+                            <li><a href="#">Meal Planning</a></li>
+                            <li><a href="#">QR Scanning</a></li>
+                            <li><a href="#">Food Information</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EatWise. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Inventory Page -->
+    <div class="container hidden" id="inventory-page">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="header-logo">
+                    <h1>EatWise</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" id="nav-home-inventory">Home</a></li>
+                        <li><a href="#" id="nav-dashboard-inventory">Dashboard</a></li>
+                        <li><a href="#" class="active">Inventory</a></li>
+                        <li><a href="#" id="nav-recipes-inventory">Recipes</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <span>JD</span>
+                    </div>
+                    <div class="user-details">
+                        <span id="inventory-user-greeting">John Doe</span>
+                        <button id="inventory-logout-btn" class="btn text-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="inventory-main">
+            <div class="page-header">
+                <div class="header-container">
+                    <h1>Food Inventory</h1>
+                    <p>Manage your food items and track expiry dates</p>
+                    <div class="inventory-actions">
+                        <button id="add-item-btn" class="btn primary-btn">
+                            <i class="fas fa-plus"></i> Add Item
+                        </button>
+                        <button id="back-btn-inventory" class="btn secondary-btn">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="inventory-container">
+                <div class="inventory-grid" id="inventory-grid">
+                    <!-- Inventory items will be dynamically added here -->
+                </div>
+            </div>
+        </main>
+        
+        <!-- Add Item Modal -->
+        <div id="add-item-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add New Item</h2>
+                    <button class="modal-close" id="close-add-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-item-form">
+                        <div class="form-group">
+                            <label for="item-name">Item Name</label>
+                            <input type="text" id="item-name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="item-quantity">Quantity</label>
+                                <input type="number" id="item-quantity" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="item-category">Category</label>
+                                <select id="item-category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="dairy">Dairy</option>
+                                    <option value="fruits">Fruits</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="meat">Meat</option>
+                                    <option value="grains">Grains</option>
+                                    <option value="beverages">Beverages</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="manufacturing-date">Manufacturing Date</label>
+                                <input type="date" id="manufacturing-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expiry-date">Expiry Date</label>
+                                <input type="date" id="expiry-date" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-price">Price ($)</label>
+                            <input type="number" id="item-price" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn secondary-btn" id="cancel-add-item">Cancel</button>
+                            <button type="submit" class="btn primary-btn">Add Item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="footer-logo-img">
+                    <p>Your Intelligent Food Companion</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Features</h4>
+                        <ul>
+                            <li><a href="#">Inventory Tracking</a></li>
+                            <li><a href="#">Meal Planning</a></li>
+                            <li><a href="#">QR Scanning</a></li>
+                            <li><a href="#">Food Information</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EatWise. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Recipes Page -->
+    <div class="container hidden" id="recipes-page">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="header-logo">
+                    <h1>EatWise</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" id="nav-home-recipes">Home</a></li>
+                        <li><a href="#" id="nav-dashboard-recipes">Dashboard</a></li>
+                        <li><a href="#" id="nav-inventory-recipes">Inventory</a></li>
+                        <li><a href="#" class="active">Recipes</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <span>JD</span>
+                    </div>
+                    <div class="user-details">
+                        <span id="recipes-user-greeting">John Doe</span>
+                        <button id="recipes-logout-btn" class="btn text-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="recipes-main">
+            <div class="page-header">
+                <div class="header-container">
+                    <h1>Healthy Recipes</h1>
+                    <p>Discover delicious and nutritious recipes based on your inventory</p>
+                    <button id="back-btn-recipes" class="btn secondary-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                </div>
+            </div>
+            <div class="recipes-container">
+                <div class="recipes-filter">
+                    <h3>Filter Recipes</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-category="all">All</button>
+                        <button class="filter-btn" data-category="breakfast">Breakfast</button>
+                        <button class="filter-btn" data-category="lunch">Lunch</button>
+                        <button class="filter-btn" data-category="dinner">Dinner</button>
+                        <button class="filter-btn" data-category="snacks">Snacks</button>
+                        <button class="filter-btn" data-category="dessert">Dessert</button>
+                    </div>
+                </div>
+                <div class="recipes-grid" id="recipes-grid">
+                    <!-- Recipes will be dynamically added here -->
+                </div>
+            </div>
+        </main>
+        
+        <!-- Recipe Detail Modal -->
+        <div id="recipe-modal" class="modal hidden">
+            <div class="modal-content recipe-modal-content">
+                <div class="modal-header">
+                    <h2 id="recipe-modal-title">Recipe Title</h2>
+                    <button class="modal-close" id="close-recipe-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body recipe-modal-body">
+                    <div class="recipe-image-container">
+                        <img id="recipe-modal-image" src="" alt="Recipe Image">
+                    </div>
+                    <div class="recipe-details">
+                        <div class="recipe-meta">
+                            <span id="recipe-modal-time"><i class="fas fa-clock"></i> <span class="time-text">0 min</span></span>
+                            <span id="recipe-modal-calories"><i class="fas fa-fire"></i> <span class="calories-text">0 cal</span></span>
+                            <span id="recipe-modal-servings"><i class="fas fa-users"></i> <span class="servings-text">0 servings</span></span>
+                        </div>
+                        <div class="recipe-ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="recipe-modal-ingredients">
+                                <!-- Ingredients will be added here -->
+                            </ul>
+                        </div>
+                        <div class="recipe-instructions">
+                            <h3>Instructions</h3>
+                            <ol id="recipe-modal-instructions">
+                                <!-- Instructions will be added here -->
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="footer-logo-img">
+                    <p>Your Intelligent Food Companion</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Features</h4>
+                        <ul>
+                            <li><a href="#">Inventory Tracking</a></li>
+                            <li><a href="#">Meal Planning</a></li>
+                            <li><a href="#">QR Scanning</a></li>
+                            <li><a href="#">Food Information</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EatWise. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Information Page -->
+    <div class="container hidden" id="info-page">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="header-logo">
+                    <h1>EatWise</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" id="nav-home-info">Home</a></li>
+                        <li><a href="#" id="nav-dashboard-info">Dashboard</a></li>
+                        <li><a href="#" id="nav-inventory-info">Inventory</a></li>
+                        <li><a href="#" id="nav-recipes-info">Recipes</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <span>JD</span>
+                    </div>
+                    <div class="user-details">
+                        <span id="info-user-greeting">John Doe</span>
+                        <button id="info-logout-btn" class="btn text-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="info-main">
+            <div class="page-header">
+                <div class="header-container">
+                    <h1>Food Information</h1>
+                    <p>Learn about food safety, storage, and nutrition</p>
+                    <button id="back-btn-info" class="btn secondary-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                </div>
+            </div>
+            <div class="info-container">
+                <div class="info-section">
+                    <div class="info-icon">
+                        <i class="fas fa-cheese"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Dairy Products</h3>
+                        <p>Dairy products are excellent sources of calcium, protein, and other essential nutrients. However, they are highly perishable and should be consumed before their expiry date to avoid foodborne illnesses.</p>
+                        <ul>
+                            <li>Store dairy products at 40°F (4°C) or below</li>
+                            <li>Check expiry dates regularly</li>
+                            <li>Discard any products that smell sour or have unusual texture</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="info-icon">
+                        <i class="fas fa-apple-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Fresh Fruits</h3>
+                        <p>Fresh fruits are packed with vitamins, minerals, and antioxidants. Consuming them regularly helps boost your immune system and overall health.</p>
+                        <ul>
+                            <li>Store most fruits in the refrigerator to extend freshness</li>
+                            <li>Keep bananas, avocados, and tomatoes at room temperature</li>
+                            <li>Wash fruits thoroughly before consumption</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="info-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Risks of Eating Expired Food</h3>
+                        <p>Consuming expired food can lead to foodborne illnesses caused by harmful bacteria, parasites, or viruses. Symptoms may include:</p>
+                        <ul>
+                            <li>Nausea, vomiting, and diarrhea</li>
+                            <li>Abdominal pain and cramps</li>
+                            <li>Fever and dehydration</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="info-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>How EatWise Helps You</h3>
+                        <p>EatWise app helps you track the expiry dates of your food items and manage your inventory efficiently.</p>
+                        <ul>
+                            <li>Scan QR codes on food items to add them to your inventory</li>
+                            <li>Get notifications before items expire</li>
+                            <li>Maintain a digital record of your food inventory</li>
+                            <li>Reduce food waste and save money</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="footer-logo-img">
+                    <p>Your Intelligent Food Companion</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Features</h4>
+                        <ul>
+                            <li><a href="#">Inventory Tracking</a></li>
+                            <li><a href="#">Meal Planning</a></li>
+                            <li><a href="#">QR Scanning</a></li>
+                            <li><a href="#">Food Information</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EatWise. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- QR Page -->
+    <div class="container hidden" id="qr-page">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="header-logo">
+                    <h1>EatWise</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" id="nav-home-qr">Home</a></li>
+                        <li><a href="#" id="nav-dashboard-qr">Dashboard</a></li>
+                        <li><a href="#" id="nav-inventory-qr">Inventory</a></li>
+                        <li><a href="#" id="nav-recipes-qr">Recipes</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <span>JD</span>
+                    </div>
+                    <div class="user-details">
+                        <span id="qr-user-greeting">John Doe</span>
+                        <button id="qr-logout-btn" class="btn text-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="qr-main">
+            <div class="page-header">
+                <div class="header-container">
+                    <h1>QR Code Scanner</h1>
+                    <p>Scan or upload QR codes to manage your inventory</p>
+                    <button id="back-btn-qr" class="btn secondary-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                </div>
+            </div>
+            <div class="qr-container">
+                <div class="qr-actions">
+                    <button id="scan-qr-btn" class="btn primary-btn btn-lg" disabled>
+                        <i class="fas fa-camera"></i> Scan QR Code
+                    </button>
+                    <button id="upload-qr-btn" class="btn secondary-btn btn-lg">
+                        <i class="fas fa-upload"></i> Upload QR Code
+                    </button>
+                    <input type="file" id="qr-file-input" accept="image/png, image/jpeg" hidden>
+                </div>
+                
+                <div id="qr-result-container" class="hidden">
+                    <div class="result-header">
+                        <h2>Inventory Data</h2>
+                        <button id="download-qr-btn" class="btn primary-btn">
+                            <i class="fas fa-download"></i> Download QR
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>Product ID</th>
+                                    <th>Name</th>
+                                    <th>Manufacturing Date</th>
+                                    <th>Expiry Date</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-table-body">
+                                <!-- Table rows will be dynamically added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="qr-display">
+                        <h3>Generated QR Code</h3>
+                        <div id="qrcode"></div>
+                        <p class="qr-hint">This QR code contains your inventory data and can be scanned for future reference.</p>
+                    </div>
+                </div>
+                
+                <div id="qr-instructions" class="qr-instructions">
+                    <h3>How to Use QR Features</h3>
+                    <div class="instructions-content">
+                        <div class="instructions-steps">
+                            <ol>
+                                <li>Click "Upload QR Code" and select an image file containing a QR code.</li>
+                                <li>The app will extract the inventory data from the QR code.</li>
+                                <li>View your inventory data in the table below.</li>
+                                <li>A new QR code will be generated for your reference.</li>
+                                <li>You can download the QR code for future use.</li>
+                            </ol>
+                        </div>
+                        <div class="sample-qr">
+                            <h4>Sample QR Code</h4>
+                            <p>Use this sample QR code to test the upload feature:</p>
+                            <img src="assets/qr-code.jpg" alt="Sample QR Code" id="sample-qr-img">
+                            <button id="use-sample-qr-btn" class="btn secondary-btn">
+                                <i class="fas fa-play"></i> Use Sample QR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <img src="assets/eatwise-logo.jpg" alt="EatWise Logo" class="footer-logo-img">
+                    <p>Your Intelligent Food Companion</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Features</h4>
+                        <ul>
+                            <li><a href="#">Inventory Tracking</a></li>
+                            <li><a href="#">Meal Planning</a></li>
+                            <li><a href="#">QR Scanning</a></li>
+                            <li><a href="#">Food Information</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EatWise. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container">
+        <!-- Toast notifications will be dynamically added here -->
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="hidden">
+        <div class="loader"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Modal Backdrop -->
+    <div id="modal-backdrop" class="modal-backdrop hidden"></div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
